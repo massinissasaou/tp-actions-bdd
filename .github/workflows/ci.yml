@@ -49,7 +49,7 @@ jobs:
         run: mvn -B package
         working-directory: java-app
 
-php:
+  php:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
