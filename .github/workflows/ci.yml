@@ -64,4 +64,21 @@ jobs:
         working-directory: php-app
       - name: Lancer les tests
         run: vendor/bin/phpunit tests
-        working-directory: php-app             
+        working-directory: php-app      
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [python, node, java, php]
+    steps:
+      - run: echo "Build OK : tous les tests ont réussi"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - run: echo "Déploiement en cours"
+      - name: Vérifier le secret
+        env:
+          TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: test -n "$TOKEN" && echo "Token présent"               
